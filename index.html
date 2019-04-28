@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="image/lc.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+    <title>Squaring the Tomato</title>
+  </head>
+
+  <body>
+    <header>
+      <div>
+        <label for="session">Session</label>
+        <div id="session">
+          <img src="image/digits/d2.png" data-default="2" data-value="2" data-max="6">
+          <img src="image/digits/d5.png" data-default="5" data-value="5" data-max="9">
+        </div>
+      </div>
+      <div>
+        <label for="short">Short Break</label>
+        <div id="short">
+          <img src="image/digits/d0.png" data-default="0" data-value = "0" data-max = "3">
+          <img src="image/digits/d5.png" data-default="5" data-value = "5" data-max = "9">
+        </div>
+      </div>
+      <div>
+        <label for="long">Long Break</label>
+        <div id="long">
+          <img src="image/digits/d2.png" data-default="2" data-value = "2" data-max = "6">
+          <img src="image/digits/d0.png" data-default="0" data-value = "0" data-max = "9">
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="container">
+        <div id="wrapper">
+          <div id="cube">
+            <div class="sides side1">
+              <p></p>
+              <div id="clock_display">
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock colon" src="image/digits/dp.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock colon" src="image/digits/dp.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+              </div>
+            </div>
+            <div class="sides side2"><p>Time</p></div>
+            <div class="sides side3"><p>It's</p></div>
+            <div class="sides side4">
+              <div id="pkt_display">
+                <img class="pkt_digit" src="image/digits/d2.png" />
+                <img class="pkt_digit" src="image/digits/d5.png" />
+                <img class="pkt_digit" src="image/digits/dp.png" />
+                <img class="pkt_digit" src="image/digits/d0.png" />
+                <img class="pkt_digit" src="image/digits/d0.png" />
+              </div>
+            </div>
+            <div class="sides side5"><p>Development</p></div>
+            <div class="sides side6"><p>For</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="controls">
+        <div>
+          <div class="control active" data-status="Start">
+            <label for="start">Start</label>
+            <p id="start">&#9205;</p>
+          </div>
+          <div class="control">
+            <label for="stop">Stop</label>
+            <p id="stop">&#9209;</p>
+          </div>
+          <div class="control">
+            <label for="reset">Reset</label>
+            <p id="reset">&#8634;</p>
+          </div>
+        </div>
+      </section>
+      <section id="title">
+        <h1>&laquo;Squadrare&nbsp;Il&nbsp;Pomodoro&raquo;</h1>
+      </section>
+    </main>
+    <footer>
+      <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">https://en.wikipedia.org/wiki/Pomodoro_Technique</a>
+    </footer>
+  </body>
+
+</html>
