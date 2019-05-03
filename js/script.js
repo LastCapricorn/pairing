@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isDefault = true;
   let isRunning = false;
   let isPaused = false;
-  let pomoCount = 7;
+  let pomoCount = 0;
   let countDown = null;
 
   function activateSettings() {
@@ -152,8 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
       controls[2].removeEventListener('click', reset);
     }
 
+    isRunning = false;
+    isPaused = false;
+    pomoCount = 0;
     times.currents = {...times.sets};
     setTimerDisplay('pomo');
+
   }
 
   function changeStatus() {
@@ -194,17 +198,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (times.currents[sequence[pomoCount]] <= 0) {
       clearInterval(countDown);
+      times.currents = {...times.sets};
       pomoCount++;
     };
 
     if (pomoCount <= 7) {
-      times.currents = {...times.sets};
       setTimerDisplay(sequence[pomoCount]);
       changeText();
       countDown = setInterval( () => {
-        if (times.currents[sequence[pomoCount]] <= 0) continuePomo();
-        times.currents[sequence[pomoCount]]--;
-        setTimerDisplay(sequence[pomoCount]);
+        if (times.currents[sequence[pomoCount]] > 0) {
+          times.currents[sequence[pomoCount]]--;
+          setTimerDisplay(sequence[pomoCount]);
+        } else {
+          clearInterval(countDown);
+          continuePomo();
+        }
       }, 1000);
     } else {
       times.currents = {...times.sets};
@@ -221,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function stopPomo() {
     clearInterval(countDown);
-    isRunning = false;
+    reset(false);
     changeStatus();
     document.querySelector('#cube').classList.remove('animated');
     activateSettings();
@@ -231,7 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
       controls[2].addEventListener('click', reset);
       controls[2].classList.add('active');
     }
-    reset(false);
   }
 
   activateSettings();
