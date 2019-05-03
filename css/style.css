@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Metal+Mania&subset=latin-ext');
-@import url('https://fonts.googleapis.com/css?family=Eater&subset=latin-ext');
 
 :root {
-  --size: 160px;
+  --size: 170px;
 
 }
 
 html {
   box-sizing: border-box;
-  /* font-family: Arial; */
   font-size: 12px;
   min-width: 540px;
 }
@@ -24,7 +22,6 @@ body {
   width: 100%;
   height: 100vh;
   background: repeating-radial-gradient(circle, #ffffff -2px, #7f7f7f 4px, #000000 8px, #7f7f7f 12px, #ffffff 16px);
-  /* font-family: 'Eater', cursive; */
   font-family: 'Metal Mania', cursive;
   display: flex;
   flex-flow: column nowrap;
@@ -48,33 +45,43 @@ header > div {
   justify-content: center;
 }
 
-header img {
-  height: 50px;
-  margin: 0 2px;
+.settings {
+  background-color: #000000;
   transition: opacity 0.5s ease;
 }
 
-header img:hover {
-  cursor: pointer;
-}
-
-header.off img {
+header.off .settings {
   opacity: 0.5;
   transition: opacity 0.5s ease;
 }
 
-header.off img:hover {
+.settings:hover {
+  cursor: pointer;
+}
+
+header.off .settings:hover {
   cursor: default;
 }
 
-header label {
+.settings img {
+  height: 50px;
+  margin: 0 1px;
+  transition: opacity 0.5s ease;
+}
+
+header.off .settings img {
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+header p {
   font-size: 2.2rem;
   color: #ff0000;
   margin-bottom: 0.5rem;
   transition: color 0.5s ease;
 }
 
-header.off label {
+header.off p {
   color: rgba(255, 0, 0, 0.5);
   transition: color 0.5s ease;
 }
@@ -110,7 +117,10 @@ main {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  /* animation: wuerfel 30s linear infinite; */
+}
+
+#cube.animated {
+  animation: wuerfel 30s linear infinite;
 }
 
 .sides {
@@ -118,59 +128,54 @@ main {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
   align-items: center;
-  border: solid 2px rgb(63, 0, 0);
-  border-radius: 20px;
+  border: solid 2px rgba(0, 63, 0, 0.85);
+  border-radius: 15px;
   background-color: rgba(159, 0, 0, 0.5);
 }
 
 .side1 {
-  /* background-color: rgba(255, 0, 0, 0.5); */
   transform: translateZ(var(--size));
 }
-
 .side2 {
-  /* background-color: rgba(0, 255, 0, 0.5); */
   transform: rotateY(90deg) translateZ(var(--size));
 }
-
 .side3 {
-  /* background-color: rgba(0, 0, 255, 0.5); */
   transform: rotateX(90deg) translateZ(var(--size));
 }
-
 .side4 {
-  /* background-color: rgba(255, 255, 0, 0.5); */
   transform: rotateX(-90deg) translateZ(var(--size));
 }
-
 .side5 {
-  /* background-color: rgba(0, 255, 255, 0.5); */
   transform: rotateY(-90deg) translateZ(var(--size));
 }
-
 .side6 {
-  /* background-color: rgba(255, 0, 255, 0.5); */
   transform: rotateY(180deg) translateZ(var(--size));
 }
 
 .sides p {
-  font-size: 3.0rem;
-  padding: 0 10px;
-  border: solid 2px black;
-  border-radius: 50%;
-  background-color: white;
+  font-size: 5.2rem;
+  text-align: center;
+  border: none;
+  color: rgba(159, 0, 0, 0.0);
+  background-color: transparent;
+  text-shadow: -3px -3px 5px #003f00,
+  -3px 3px 3px #000000,
+  3px -3px 3px #000000,
+  3px 3px 10px #003f00;
 }
-
-#clock_display {
+.side4 p {
+  font-size: 4.2rem;
+}
+#clockDisplay {
   padding: 5px;
   background-color: #000000;
 }
 
 .clock {
-  height: 19px;
+  height: 31px;
 }
 
 #pkt_display {

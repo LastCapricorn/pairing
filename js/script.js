@@ -2,133 +2,239 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-
-  const settings = document.querySelectorAll('header img');
-  const pomodoro = document.querySelectorAll('.pkt_digit');
-  const controls = document.querySelectorAll('.control');
-  const labels = document.querySelectorAll('#controls label');
-  let isNotDefault = false;
+  const convert = (value) => {
+    return {
+      hi : parseInt(value / 10),
+      lo : parseInt(value % 10)
+    };
+  };
 
   const timeOfDay = setInterval( () => {
+
+    const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
     const clock = document.querySelectorAll(".clock.digit");
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    const weekDays = [["Sunday", "Sonntag"], ["Monday", "Montag"], ["Tuesday", "Dienstag"], ["Wednesday", "Mittwoch"], ["Thursday", "Donnerstag"], ["Friday", "Freitag"], ["Saturday", "Samstag"]];
-    const monthNames = [["January", "Januar"], ["February", "Februar"], ["March", "März"], ["April", "April"], ["May", "Mai"], ["June", "Juni"], ["July", "Juli"], ["August", "August"], ["September", "September"], ["October", "Oktober"], ["November", "November"], ["December", "Dezember"]];
-    const dateString = `${weekDays[now.getDay()][0]}, ${now.getDate()}. ${monthNames[now.getMonth()][0]} ${now.getFullYear()}`
-    document.querySelector('.side1 p').textContent = dateString;
+    const hours = convert(now.getHours());
+    const minutes = convert(now.getMinutes());
+    const seconds = convert(now.getSeconds());
 
-    clock[0].src = `image/digits/d${(hours - hours % 10) / 10}.png`;
-    clock[1].src = `image/digits/d${hours % 10}.png`;
-    clock[2].src = `image/digits/d${(minutes - minutes % 10) / 10}.png`;
-    clock[3].src = `image/digits/d${minutes % 10}.png`;
-    clock[4].src = `image/digits/d${(seconds-seconds % 10) / 10}.png`;
-    clock[5].src = `image/digits/d${seconds % 10}.png`;
+    const dateString = [`${weekDays[now.getDay()]},`, `${now.getDate()}. ${monthNames[now.getMonth()]}`, `${now.getFullYear()}`];
+
+    for (let i = 0; i < 3; i++) {
+      document.querySelectorAll('.side4 p')[i].textContent = dateString[i];
+    }
+
+    clock[0].src = `image/digits/d${hours.hi}.png`;
+    clock[1].src = `image/digits/d${hours.lo}.png`;
+    clock[2].src = `image/digits/d${minutes.hi}.png`;
+    clock[3].src = `image/digits/d${minutes.lo}.png`;
+    clock[4].src = `image/digits/d${seconds.hi}.png`;
+    clock[5].src = `image/digits/d${seconds.lo}.png`;
+
   }, 1000);
 
-  function setTimes(ev) {
-    ev.preventDefault();
-    if (ev.type === 'click' && ev.button === 0 || ev.type === 'mousewheel' && ev.wheelDelta > 0) {
-      if (ev.target.dataset.value < ev.target.dataset.max) {
-        ev.target.dataset.value++;
-      }
-    } else if (ev.type === 'contextmenu' || ev.type === 'mousewheel' && ev.wheelDelta < 0) {
-      if (ev.target.dataset.value > 0) {
-        ev.target.dataset.value--;
-      }
-    }
-    ev.target.src = `image/digits/d${ev.target.dataset.value}.png`;
-    pomodoro[0].src = `image/digits/d${settings[0].dataset.value}.png`;
-    pomodoro[1].src = `image/digits/d${settings[1].dataset.value}.png`;
-    controls[2].classList.add('active');
-    controls[2].addEventListener('click', reset);
-    isNotDefault = true;
-  }
+  const toDigits = (value) => {
+    return [
+      parseInt((value / 60) / 10),
+      parseInt((value / 60) % 10),
+      parseInt((value % 60) / 10),
+      parseInt((value % 60) % 10)
+    ];
+  };
 
-  function reset(all = true) {
-    if (all) {
-      controls[2].removeEventListener('click', reset);
-      controls[2].classList.remove('active');
-      settings.forEach( (set) => {
-        set.dataset.value = set.dataset.default;
-        set.src = `image/digits/d${set.dataset.value}.png`;
-      } );
-      isNotDefault = false;
-    }
-    pomodoro[0].src = `image/digits/d${settings[0].dataset.value}.png`;
-    pomodoro[1].src = `image/digits/d${settings[1].dataset.value}.png`;
-    pomodoro[3].src = `image/digits/d0.png`;
-    pomodoro[4].src = `image/digits/d0.png`;
-  }
+  const times = new class {
+    defaults = {
+      pomo : 25 * 60,
+      short : 5 * 60,
+      long : 15 * 60
+    };
+    max = {
+      pomo : 90 * 60,
+      short : 30 * 60,
+      long : 60 * 60
+    };
+    sets = {...this.defaults};
+    currents = {...this.defaults};
+  };
+
+  const text = {
+    pomo : ["Session","Time","It's","Development","For"],
+    short : ["Short Break","Have","Let's","Coffee","Some"],
+    long : ["Long Break","Time","Isn't it","Lunch??","For"]
+  };
+
+  const sequence = ["pomo", "short", "pomo", "short", "pomo", "short", "pomo", "long"];
+
+  const settings = document.querySelectorAll('.settings');
+  const pomoDigits = document.querySelectorAll('.pomoDigits');
+  const controls = document.querySelectorAll('.control');
+  const labels = document.querySelectorAll('#controls label');
+  let isDefault = true;
+  let isRunning = false;
+  let isPaused = false;
+  let pomoCount = 7;
+  let countDown = null;
 
   function activateSettings() {
-    settings.forEach( (setting) => setting.addEventListener('contextmenu', setTimes) );
-    settings.forEach( (setting) => setting.addEventListener('click', setTimes) );
-    settings.forEach( (setting) => setting.addEventListener('mousewheel', setTimes) );
+    settings.forEach( (setting) => {
+      setting.addEventListener('contextmenu', setTimes);
+      setting.addEventListener('click', setTimes);
+      setting.addEventListener('mousewheel', setTimes);
+    } );
     document.querySelector('header').classList.remove('off');
   }
 
   function deActivateSettings() {
-    settings.forEach( (setting) => setting.removeEventListener('contextmenu', setTimes) );
-    settings.forEach( (setting) => setting.removeEventListener('click', setTimes) );
-    settings.forEach( (setting) => setting.removeEventListener('mousewheel', setTimes) );
+    settings.forEach( (setting) => {
+    setting.removeEventListener('contextmenu', setTimes);
+    setting.removeEventListener('click', setTimes);
+    setting.removeEventListener('mousewheel', setTimes);
+    } );
     document.querySelector('header').classList.add('off');
   }
 
-  function changeStatus() {
-    controls[0].dataset.status === 'Start' ? controls[0].dataset.status = 'Pause' : controls[0].dataset.status = 'Start';
-    labels[0].textContent = controls[0].dataset.status;
-    controls[0].dataset.status === 'Start' ? document.querySelector('#start').innerHTML = '&#9205;' : document.querySelector('#start').innerHTML = '&#9208;';
+  function setTimerDisplay(name) {
+    let digits = toDigits(times.currents[name]);
+    for (let i = 0; i < 4; i++) {
+      pomoDigits[i].src = `image/digits/d${digits[i]}.png`;
+    }
   }
 
-  function startPomodoro(ev) {
+  function changeText() {
+    document.querySelector('#timerName').textContent = text[sequence[pomoCount]][0];
+    for (let i = 0; i < 4; i++) {
+      document.querySelectorAll('.text')[i].textContent = text[sequence[pomoCount]][i + 1];
+    }
+  }
+
+  function setTimes(ev) {
+
+    ev.preventDefault();
+    const target = ev.currentTarget.id;
+
+    if (ev.type === 'click' && ev.button === 0 || ev.type === 'mousewheel' && ev.wheelDelta > 0) {
+      if (times.sets[target] < times.max[target]) {
+        times.sets[target] += 1 * 60;
+      }
+    } else if (ev.type === 'contextmenu' || ev.type === 'mousewheel' && ev.wheelDelta < 0) {
+      if (times.sets[target] > 1 * 60) {
+        times.sets[target] -= 1 * 60;
+      }
+    }
+
+    document.querySelectorAll(`#${target} img`)[0].src = `image/digits/d${toDigits(times.sets[target])[0]}.png`;
+    document.querySelectorAll(`#${target} img`)[1].src = `image/digits/d${toDigits(times.sets[target])[1]}.png`;
+
+    times.currents = {...times.sets};
+    setTimerDisplay('pomo');
+
+    isDefault = false;
+    controls[2].classList.add('active');
+    controls[2].addEventListener('click', reset);
+
+  }
+
+  function reset(all = true) {
+
+    if (all) {
+      times.sets = {...times.defaults};
+
+      settings.forEach( (set) => {
+        set.querySelectorAll('img')[0].src = `image/digits/d${toDigits(times.sets[set.id])[0]}.png`;
+        set.querySelectorAll('img')[1].src = `image/digits/d${toDigits(times.sets[set.id])[1]}.png`;
+      } );
+
+      isDefault = true;
+      controls[2].classList.remove('active');
+      controls[2].removeEventListener('click', reset);
+    }
+
+    times.currents = {...times.sets};
+    setTimerDisplay('pomo');
+  }
+
+  function changeStatus() {
+    controls[0].dataset.status = isRunning ? isPaused ? 'Continue' : 'Pause' : 'Start';
+    document.querySelector('#start').innerHTML = isRunning ? isPaused ? '&#9205;' : '&#9208;' : '&#9205';
+    labels[0].textContent = controls[0].dataset.status;
+  }
+
+  function pomodoro() {
+    isRunning ? isPaused ? continuePomo() : pausePomo() : startPomo();
+  }
+
+  function startPomo() {
+
     deActivateSettings();
-    if(isNotDefault) {
+
+    if(!isDefault) {
       controls[2].removeEventListener('click', reset);
       controls[2].classList.remove('active');
     }
-    controls[1].addEventListener('click', stopPomodoro);
+
+    controls[1].addEventListener('click', stopPomo);
     controls[1].classList.add('active');
+
+    isRunning = true;
     changeStatus();
-    activePomodoro();
+    document.querySelector('#cube').classList.add('animated');
+    continuePomo();
+
   }
 
-  function stopPomodoro() {
+  function continuePomo() {
+
+    if (isPaused) {
+      isPaused = false;
+      changeStatus();
+    }
+
+    if (times.currents[sequence[pomoCount]] <= 0) {
+      clearInterval(countDown);
+      pomoCount++;
+    };
+
+    if (pomoCount <= 7) {
+      times.currents = {...times.sets};
+      setTimerDisplay(sequence[pomoCount]);
+      changeText();
+      countDown = setInterval( () => {
+        if (times.currents[sequence[pomoCount]] <= 0) continuePomo();
+        times.currents[sequence[pomoCount]]--;
+        setTimerDisplay(sequence[pomoCount]);
+      }, 1000);
+    } else {
+      times.currents = {...times.sets};
+      stopPomo();
+    }
+
+  };
+
+  function pausePomo() {
     clearInterval(countDown);
+    isPaused = true;
+    changeStatus();
+  }
+
+  function stopPomo() {
+    clearInterval(countDown);
+    isRunning = false;
+    changeStatus();
+    document.querySelector('#cube').classList.remove('animated');
     activateSettings();
-    controls[1].removeEventListener('click', stopPomodoro);
+    controls[1].removeEventListener('click', stopPomo);
     controls[1].classList.remove('active');
-    if (controls[0].dataset.status === 'Pause') changeStatus();
-    if(isNotDefault) {
+    if(!isDefault) {
       controls[2].addEventListener('click', reset);
       controls[2].classList.add('active');
     }
     reset(false);
   }
 
-  function activePomodoro() {
-
-    document.querySelector('#cube').style.transform = 'rotateX(90deg)';
-
-    const endTime = Date.now() + (parseInt(settings[0].dataset.value + settings[1].dataset.value) * 60 * 1000);
-
-    const countDown = setInterval( () => {
-      const timeRemaining = new Date(endTime - Date.now());
-      const remMinHi = (timeRemaining.getMinutes() - timeRemaining.getMinutes() % 10) / 10;
-      const remMinLo = timeRemaining.getMinutes() % 10;
-      const remSecHi = (timeRemaining.getSeconds() - timeRemaining.getSeconds() % 10) / 10;
-      const remSecLo = timeRemaining.getSeconds() % 10;
-      pomodoro[0].src = `image/digits/d${remMinHi}.png`;
-      pomodoro[1].src = `image/digits/d${remMinLo}.png`;
-      pomodoro[3].src = `image/digits/d${remSecHi}.png`;
-      pomodoro[4].src = `image/digits/d${remSecLo}.png`;
-    }, 990 );
-
-  };
-
   activateSettings();
-  controls[0].addEventListener('click', startPomodoro);
+  controls[0].addEventListener('click', pomodoro);
 
 });

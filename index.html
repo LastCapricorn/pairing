@@ -14,24 +14,24 @@
   <body>
     <header>
       <div>
-        <label for="session">Session</label>
-        <div id="session">
-          <img src="image/digits/d2.png" data-default="2" data-value="2" data-max="6">
-          <img src="image/digits/d5.png" data-default="5" data-value="5" data-max="9">
+        <p>Session</p>
+        <div class="settings" id="pomo">
+          <img src="image/digits/d2.png">
+          <img src="image/digits/d5.png">
         </div>
       </div>
       <div>
-        <label for="short">Short Break</label>
-        <div id="short">
-          <img src="image/digits/d0.png" data-default="0" data-value = "0" data-max = "3">
-          <img src="image/digits/d5.png" data-default="5" data-value = "5" data-max = "9">
+        <p>Short Break</p>
+        <div class="settings" id="short">
+          <img src="image/digits/d0.png">
+          <img src="image/digits/d5.png">
         </div>
       </div>
       <div>
-        <label for="long">Long Break</label>
-        <div id="long">
-          <img src="image/digits/d2.png" data-default="2" data-value = "2" data-max = "6">
-          <img src="image/digits/d0.png" data-default="0" data-value = "0" data-max = "9">
+        <p>Long Break</p>
+        <div class="settings" id="long">
+          <img src="image/digits/d1.png">
+          <img src="image/digits/d5.png">
         </div>
       </div>
     </header>
@@ -41,32 +41,33 @@
         <div id="wrapper">
           <div id="cube">
             <div class="sides side1">
-              <p></p>
-              <div id="clock_display">
-                <img class="clock digit" src="image/digits/off.png" />
-                <img class="clock digit" src="image/digits/off.png" />
-                <img class="clock colon" src="image/digits/dp.png" />
-                <img class="clock digit" src="image/digits/off.png" />
-                <img class="clock digit" src="image/digits/off.png" />
-                <img class="clock colon" src="image/digits/dp.png" />
-                <img class="clock digit" src="image/digits/off.png" />
-                <img class="clock digit" src="image/digits/off.png" />
-              </div>
-            </div>
-            <div class="sides side2"><p>Time</p></div>
-            <div class="sides side3"><p>It's</p></div>
-            <div class="sides side4">
+              <p id="timerName">Session</p>
               <div id="pkt_display">
-                <img class="pkt_digit" src="image/digits/d2.png" />
-                <img class="pkt_digit" src="image/digits/d5.png" />
-                <img class="pkt_digit" src="image/digits/dp.png" />
-                <img class="pkt_digit" src="image/digits/d0.png" />
-                <img class="pkt_digit" src="image/digits/d0.png" />
+                <img class="pomoDigits" src="image/digits/d2.png" />
+                <img class="pomoDigits" src="image/digits/d5.png" />
+                <img src="image/digits/dp.png" />
+                <img class="pomoDigits" src="image/digits/d0.png" />
+                <img class="pomoDigits" src="image/digits/d0.png" />
+              </div>
+              <p>Timer</p>
+            </div>
+            <div class="sides side2"><p class="text">Time</p></div>
+            <div class="sides side3"><p class="text">It's</p></div>
+            <div class="sides side4">
+              <p></p><p></p><p></p>
+              <div id="clockDisplay">
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock colon" src="image/digits/dp.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock colon" src="image/digits/dp.png" />
+                <img class="clock digit" src="image/digits/off.png" />
+                <img class="clock digit" src="image/digits/off.png" />
               </div>
             </div>
-            <div class="sides side5"><p>Development</p></div>
-            <div class="sides side6"><p>For</p>
-            </div>
+            <div class="sides side5"><p class="text">Development</p></div>
+            <div class="sides side6"><p class="text">For</p></div>
           </div>
         </div>
       </section>
