@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const settings = document.querySelectorAll('.settings');
   const pomoDigits = document.querySelectorAll('.pomoDigits');
   const controls = document.querySelectorAll('.control');
-  const labels = document.querySelectorAll('#controls label');
   let isDefault = true;
   let isRunning = false;
   let isPaused = false;
@@ -163,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function changeStatus() {
     controls[0].dataset.status = isRunning ? isPaused ? 'Continue' : 'Pause' : 'Start';
     document.querySelector('#start').innerHTML = isRunning ? isPaused ? '&#9205;' : '&#9208;' : '&#9205';
-    labels[0].textContent = controls[0].dataset.status;
+    document.querySelector('#start_text').textContent = controls[0].dataset.status;
   }
 
   function pomodoro() {

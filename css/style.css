@@ -2,52 +2,52 @@
 
 :root {
   --size: 170px;
-
 }
 
 html {
   box-sizing: border-box;
-  font-size: 12px;
-  min-width: 540px;
+  /* font-size: 12px; */
 }
 
 *, *::before, *::after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  /* border: 1px solid cyan; */
 }
 
 body {
-  width: 100%;
   height: 100vh;
   background: repeating-radial-gradient(circle, #ffffff -2px, #7f7f7f 4px, #000000 8px, #7f7f7f 12px, #ffffff 16px);
   font-family: 'Metal Mania', cursive;
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
+  justify-content: space-between;
 }
 
 header {
-  flex: 0 1 auto;
-  width: 100%;
   background-color: rgba(0, 0, 0, 0.85);
   box-shadow: 0px 0px 20px 30px rgba(0, 0, 0, 0.85);
-  padding: 20px 0;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+#settings_box {
+  width: 70vw;
   display: flex;
   justify-content: space-evenly;
 }
 
-header > div {
+#settings_box > div {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: center;
 }
 
 .settings {
   background-color: #000000;
   transition: opacity 0.5s ease;
+  display: flex;
 }
 
 header.off .settings {
@@ -64,7 +64,7 @@ header.off .settings:hover {
 }
 
 .settings img {
-  height: 50px;
+  height: 5vh;
   margin: 0 1px;
   transition: opacity 0.5s ease;
 }
@@ -75,9 +75,9 @@ header.off .settings img {
 }
 
 header p {
-  font-size: 2.2rem;
+  font-size: 2.5vh;
   color: #ff0000;
-  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
   transition: color 0.5s ease;
 }
 
@@ -87,19 +87,16 @@ header.off p {
 }
 
 main {
-  flex: 1 0 auto;
-  width: 100%;
+  flex: 1;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-evenly;
   align-items: center;
+  justify-content: center;
 }
 
 #container {
-  width: 520px;
-  height: 520px;
-  border-radius: 50%;
-  background-color: black;
+  flex: 1;
+  width: 40vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,6 +107,10 @@ main {
   perspective: 1200px;
   width: calc( var(--size) * 2 );
   height: calc( var(--size) * 2 );
+  border-radius: 50%;
+  background-color: black;
+  box-shadow: 0 0 0 85px #000000;
+  /* margin-top: 85px; */
 }
 
 #cube {
@@ -120,7 +121,7 @@ main {
 }
 
 #cube.animated {
-  animation: wuerfel 30s linear infinite;
+  animation: wuerfel 20s linear infinite;
 }
 
 .sides {
@@ -139,24 +140,29 @@ main {
 .side1 {
   transform: translateZ(var(--size));
 }
+
 .side2 {
   transform: rotateY(90deg) translateZ(var(--size));
 }
+
 .side3 {
   transform: rotateX(90deg) translateZ(var(--size));
 }
+
 .side4 {
   transform: rotateX(-90deg) translateZ(var(--size));
 }
+
 .side5 {
   transform: rotateY(-90deg) translateZ(var(--size));
 }
+
 .side6 {
   transform: rotateY(180deg) translateZ(var(--size));
 }
 
 .sides p {
-  font-size: 5.2rem;
+  font-size: 4vh;
   text-align: center;
   border: none;
   color: rgba(159, 0, 0, 0.0);
@@ -166,16 +172,18 @@ main {
   3px -3px 3px #000000,
   3px 3px 10px #003f00;
 }
+
 .side4 p {
-  font-size: 4.2rem;
+  font-size: 3vh;
 }
+
 #clockDisplay {
   padding: 5px;
   background-color: #000000;
 }
 
 .clock {
-  height: 31px;
+  height: 3vh;
 }
 
 #pkt_display {
@@ -183,31 +191,43 @@ main {
   background-color: #000000;
 }
 
+#pkt_display img {
+  height: 7vh;
+}
+
 #controls {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.85);
-  box-shadow: 0px 0px 20px 30px rgba(0, 0, 0, 0.85);
-  padding: 1.0rem 0;
+  box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.85);
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center;
 }
-#controls div {
-  width: 100%;
+
+#controls_box {
+  width: 70vw;
   display: flex;
   justify-content: space-evenly;
+}
+
+#controls_box div {
+  flex: 1;
   align-items: center;
 }
-.control.active label {
+
+.control.active p:first-child {
   color: #3fff3f;
 }
 
 .control {
   display: flex;
   flex-flow: column nowrap;
-  font-size: 1.8rem;
+  font-size: 2vh;
   color: #ffffff;
 }
 
-.control p {
-  margin-top: 0.5rem;
+.control p:last-child {
+  /* margin-top: 0.5rem; */
   padding: 5px 10px;
   border: 2px solid #ffffff;
   border-radius: 50%;
@@ -217,22 +237,27 @@ main {
   cursor: default;
 }
 
-.control.active p:hover {
+.control.active p:last-child:hover {
   cursor: pointer;
   color: #3fff3f;
   border-color: #3fff3f;
   box-shadow: 0 0 10px 0px #3fff3f;
 }
 
+footer {
+}
+
 #title {
-  width: 100%;
+  width: 70vw;
+  margin: 0 auto;
   text-align: center;
-  overflow: hidden;  
+  padding: 20px 0;
 }
 
 #title h1 {
+  /* text-align: center; */
   color: #9f0000;
-  font-size: 7.0rem;
+  font-size: 3.5vh;
   font-weight: normal;
   text-shadow:  2px 2px 10px #003f00,
                 -2px 2px 10px #003f00,
@@ -240,8 +265,20 @@ main {
                 2px -2px 10px #003f00;
 }
 
-footer {
-  flex: 0 1 auto;
+#links {
+  width: 100%;
+  background-color: #000000;
+  text-align: center;
+}
+
+#links a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3vh;
+  color: white;
+}
+
+#links a:hover {
+  color: #3fff3f;
 }
 
 @keyframes wuerfel {
