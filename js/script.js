@@ -2,16 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const convert = (value) => {
-    return {
-      hi : parseInt(value / 10),
-      lo : parseInt(value % 10)
-    };
-  };
+  const convert = (value) => value.toString().length < 2 ? ('0' + value.toString()).split('') : value.toString().split('');
 
   const timeOfDay = setInterval( () => {
 
-    const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const weekDays = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -21,18 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutes = convert(now.getMinutes());
     const seconds = convert(now.getSeconds());
 
-    const dateString = [`${weekDays[now.getDay()]},`, `${now.getDate()}. ${monthNames[now.getMonth()]}`, `${now.getFullYear()}`];
+    const dateString = [`${weekDays[now.getDay()]}day,`, `${now.getDate()}. ${monthNames[now.getMonth()]}`, `${now.getFullYear()}`];
 
     for (let i = 0; i < 3; i++) {
       document.querySelectorAll('.side4 p')[i].textContent = dateString[i];
     }
 
-    clock[0].src = `image/digits/d${hours.hi}.png`;
-    clock[1].src = `image/digits/d${hours.lo}.png`;
-    clock[2].src = `image/digits/d${minutes.hi}.png`;
-    clock[3].src = `image/digits/d${minutes.lo}.png`;
-    clock[4].src = `image/digits/d${seconds.hi}.png`;
-    clock[5].src = `image/digits/d${seconds.lo}.png`;
+    clock[0].src = `image/digits/d${hours[0]}.png`;
+    clock[1].src = `image/digits/d${hours[1]}.png`;
+    clock[2].src = `image/digits/d${minutes[0]}.png`;
+    clock[3].src = `image/digits/d${minutes[1]}.png`;
+    clock[4].src = `image/digits/d${seconds[0]}.png`;
+    clock[5].src = `image/digits/d${seconds[1]}.png`;
 
   }, 1000);
 
@@ -155,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isPaused = false;
     pomoCount = 0;
     times.currents = {...times.sets};
+    changeText();
     setTimerDisplay('pomo');
 
   }

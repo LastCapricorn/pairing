@@ -6,13 +6,14 @@
 
 html {
   box-sizing: border-box;
-  /* font-size: 12px; */
+  font-size: 12px;
 }
 
 *, *::before, *::after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
+  /* border: 1px solid green; */
 }
 
 body {
@@ -64,7 +65,7 @@ header.off .settings:hover {
 }
 
 .settings img {
-  height: 5vh;
+  height: 51px;
   margin: 0 1px;
   transition: opacity 0.5s ease;
 }
@@ -75,7 +76,7 @@ header.off .settings img {
 }
 
 header p {
-  font-size: 2.5vh;
+  font-size: 2.0rem;
   color: #ff0000;
   padding-bottom: 0.5rem;
   transition: color 0.5s ease;
@@ -96,7 +97,7 @@ main {
 
 #container {
   flex: 1;
-  width: 40vh;
+  width: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,7 +111,7 @@ main {
   border-radius: 50%;
   background-color: black;
   box-shadow: 0 0 0 85px #000000;
-  /* margin-top: 85px; */
+  margin-top: 75px;
 }
 
 #cube {
@@ -162,19 +163,23 @@ main {
 }
 
 .sides p {
-  font-size: 4vh;
+  font-size: 5.0rem;
   text-align: center;
   border: none;
-  color: rgba(159, 0, 0, 0.0);
+  color: rgba(0, 71, 0, 1.0);
   background-color: transparent;
-  text-shadow: -3px -3px 5px #003f00,
+  text-shadow: -3px -3px 3px #000000,
   -3px 3px 3px #000000,
   3px -3px 3px #000000,
-  3px 3px 10px #003f00;
+  3px 3px 3px #000000,
+  -6px -6px 6px #003f00,
+  -6px 6px 6px #003f00,
+  6px -6px 6px #003f00,
+  6px 6px 6px #003f00;
 }
 
 .side4 p {
-  font-size: 3vh;
+  font-size: 4.0rem;
 }
 
 #clockDisplay {
@@ -183,7 +188,7 @@ main {
 }
 
 .clock {
-  height: 3vh;
+  height: 31px;
 }
 
 #pkt_display {
@@ -191,15 +196,11 @@ main {
   background-color: #000000;
 }
 
-#pkt_display img {
-  height: 7vh;
-}
-
 #controls {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.85);
   box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.85);
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   display: flex;
   justify-content: center;
 }
@@ -211,23 +212,22 @@ main {
 }
 
 #controls_box div {
-  flex: 1;
   align-items: center;
 }
 
-.control.active p:first-child {
+.control.active p:last-child {
   color: #3fff3f;
 }
 
 .control {
   display: flex;
   flex-flow: column nowrap;
-  font-size: 2vh;
+  font-size: 1.5rem;
   color: #ffffff;
 }
 
-.control p:last-child {
-  /* margin-top: 0.5rem; */
+.control p:first-child {
+  margin-bottom: 0.5rem;
   padding: 5px 10px;
   border: 2px solid #ffffff;
   border-radius: 50%;
@@ -237,27 +237,23 @@ main {
   cursor: default;
 }
 
-.control.active p:last-child:hover {
+.control.active p:first-child:hover {
   cursor: pointer;
   color: #3fff3f;
   border-color: #3fff3f;
   box-shadow: 0 0 10px 0px #3fff3f;
 }
 
-footer {
-}
-
 #title {
   width: 70vw;
   margin: 0 auto;
   text-align: center;
-  padding: 20px 0;
+  padding: 5px 0;
 }
 
 #title h1 {
-  /* text-align: center; */
   color: #9f0000;
-  font-size: 3.5vh;
+  font-size: 5.0rem;
   font-weight: normal;
   text-shadow:  2px 2px 10px #003f00,
                 -2px 2px 10px #003f00,
@@ -269,16 +265,20 @@ footer {
   width: 100%;
   background-color: #000000;
   text-align: center;
+  padding: 0.3rem 0;
 }
 
 #links a {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.3vh;
   color: white;
 }
 
 #links a:hover {
   color: #3fff3f;
+}
+
+#links a:first-child {
+  padding-right: 1.0rem;
 }
 
 @keyframes wuerfel {
@@ -292,3 +292,155 @@ footer {
     transform: rotateY(180deg) rotateZ(-180deg) rotateX(-180deg);
   }
 }
+
+@media all and (max-width: 800px) {
+
+  :root {
+    --size: 160px;
+  }
+  
+  #wrapper {
+    margin-top: 60px;
+  }
+  
+  #pkt_display img {
+    height: 101px;
+  }
+  
+  #title h1 {
+    font-size: 4.0rem;
+  }
+
+}
+
+@media all and (max-width: 600px) {
+
+  :root {
+    --size: 145px;
+  }
+  
+  .settings img {
+    height: 41px;
+  }
+  
+  header p {
+    font-size: 1.7rem;
+  }
+
+  #wrapper {
+    box-shadow: 0 0 0 65px #000000;
+    margin-top: 60px;
+  }
+  
+  .sides p {
+    font-size: 4.5rem;
+  }
+  
+  .side4 p {
+    font-size: 3.5rem;
+  }
+  
+  .clock {
+    height: 31px;
+  }
+
+  #pkt_display img {
+    height: 91px;
+  }
+  
+  #title h1 {
+    font-size: 2.8rem;
+  }
+
+}
+
+@media all and (max-width: 400px) {
+
+  :root {
+    --size: 105px;
+  }
+  
+  .settings img {
+    height: 41px;
+  }
+  
+  header p {
+    font-size: 1.4rem;
+  }
+
+  #wrapper {
+    box-shadow: 0 0 0 45px #000000;
+    margin-top: 40px;
+  }
+  
+  .sides p {
+    font-size: 3.4rem;
+  }
+  
+  .side4 p {
+    font-size: 2.4rem;
+  }
+  
+  .clock {
+    height: 21px;
+  }
+
+  #pkt_display img {
+    height: 71px;
+  }
+
+  .control p {
+    font-size: 1.2rem;
+  }
+  
+  #title h1 {
+    font-size: 2.0rem;
+  }
+
+}
+
+@media all and (max-width: 300px) {
+
+  :root {
+    --size: 80px;
+  }
+  
+  .settings img {
+    height: 31px;
+  }
+  
+  header p {
+    font-size: 1.0rem;
+  }
+
+  #wrapper {
+    box-shadow: 0 0 0 30px #000000;
+    margin-top: 48px;
+  }
+  
+  .sides p {
+    font-size: 2.4rem;
+  }
+  
+  .side4 p {
+    font-size: 1.4rem;
+  }
+  
+  .clock {
+    height: 16px;
+  }
+
+  #pkt_display img {
+    height: 41px;
+  }
+
+  .control p {
+    font-size: 1.2rem;
+  }
+  
+  #title h1 {
+    font-size: 1.5rem;
+  }
+
+}
+
