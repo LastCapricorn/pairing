@@ -88,11 +88,57 @@ header.off p {
 }
 
 main {
+  position: relative;
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+}
+
+#info {
+  position: absolute;
+  top: 2%;
+  left: 20%;
+  z-index: 1;
+}
+
+#info p:first-child {
+  display: inline-block;
+  font-size: 2.0rem;
+  font-style: italic;
+  color: #afaf1f;
+  border: 3px solid #afaf1f;
+  border-radius: 50%;background-color: #000000;
+  padding: 0 1.2rem 0 1.0rem;
+}
+
+#info p:first-child:hover {
+  cursor: pointer;
+}
+
+#info p:last-child {
+  width: 0;
+  height: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 0rem;
+  text-align: center;
+  padding: 0.5rem;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 500ms ease;
+}
+
+#info p:first-child:hover ~ p:last-child {
+  width: 170px;
+  height: 170px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 1;
+  border: 3px groove rgba(175,175,31, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 500ms ease;
 }
 
 #container {
