@@ -236,7 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function info(e) {
+    e.type === 'mouseenter' ? document.querySelector('#info p:last-child').classList.add('info') : document.querySelector('#info p:last-child').classList.remove('info');
+  }
+
   activateSettings();
+  document.querySelector('#info p:first-child').addEventListener('mouseenter', info);
+  document.querySelector('#info p:first-child').addEventListener('mouseleave', info);
   controls[0].addEventListener('click', pomodoro);
 
 });

@@ -113,9 +113,9 @@ main {
   padding: 0 1.2rem 0 1.0rem;
 }
 
-#info p:first-child:hover {
+/* #info p:first-child:hover {
   cursor: pointer;
-}
+} */
 
 #info p:last-child {
   width: 0;
@@ -130,7 +130,8 @@ main {
   transition: all 500ms ease;
 }
 
-#info p:first-child:hover ~ p:last-child {
+#info p:last-child.info {
+/* #info p:first-child:hover ~ p:last-child { */
   width: 170px;
   height: 170px;
   font-size: 1.5rem;
