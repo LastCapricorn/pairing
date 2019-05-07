@@ -40,19 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   };
 
-  const times = new class {
-    defaults = {
+  const times = {
+    defaults : {
       pomo : 25 * 60,
       short : 5 * 60,
       long : 15 * 60
-    };
-    max = {
+    },
+    max : {
       pomo : 90 * 60,
       short : 30 * 60,
       long : 60 * 60
-    };
-    sets = {...this.defaults};
-    currents = {...this.defaults};
+    },
+    sets : {
+      pomo : 25 * 60,
+      short : 5 * 60,
+      long : 15 * 60
+    },
+    currents : {
+      pomo : 25 * 60,
+      short : 5 * 60,
+      long : 15 * 60
+    },
   };
 
   const text = {
@@ -76,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     settings.forEach( (setting) => {
       setting.addEventListener('contextmenu', setTimes);
       setting.addEventListener('click', setTimes);
-      setting.addEventListener('mousewheel', setTimes);
+      setting.addEventListener('wheel', setTimes);
     } );
     document.querySelector('header').classList.remove('off');
   }
@@ -85,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     settings.forEach( (setting) => {
     setting.removeEventListener('contextmenu', setTimes);
     setting.removeEventListener('click', setTimes);
-    setting.removeEventListener('mousewheel', setTimes);
+    setting.removeEventListener('wheel', setTimes);
     } );
     document.querySelector('header').classList.add('off');
   }
@@ -109,11 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ev.preventDefault();
     const target = ev.currentTarget.id;
 
-    if (ev.type === 'click' && ev.button === 0 || ev.type === 'mousewheel' && ev.wheelDelta > 0) {
+    if (ev.type === 'click' && ev.button === 0 || ev.type === 'wheel' && ev.deltaY < 0) {
       if (times.sets[target] < times.max[target]) {
         times.sets[target] += 1 * 60;
       }
-    } else if (ev.type === 'contextmenu' || ev.type === 'mousewheel' && ev.wheelDelta < 0) {
+    } else if (ev.type === 'contextmenu' || ev.type === 'wheel' && ev.deltaY > 0) {
       if (times.sets[target] > 1 * 60) {
         times.sets[target] -= 1 * 60;
       }
@@ -200,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pomoCount <= 7) {
       setTimerDisplay(sequence[pomoCount]);
       changeText();
+      document.querySelector('audio').play();
       countDown = setInterval( () => {
         if (times.currents[sequence[pomoCount]] > 0) {
           times.currents[sequence[pomoCount]]--;
